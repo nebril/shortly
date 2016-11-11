@@ -30,7 +30,7 @@ class Migration(migrations.Migration):
                 ('first_name', models.CharField(max_length=100)),
                 ('last_name', models.CharField(max_length=100)),
                 ('email', models.CharField(max_length=100)),
-                ('password', models.CharField(max_length=100)),
+                ('password', models.CharField(max_length=64)),
                 ('date_joined', models.DateTimeField()),
             ],
         ),
