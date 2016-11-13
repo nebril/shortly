@@ -1,6 +1,8 @@
+from django.core.exceptions import ObjectDoesNotExist
 from django.http import HttpResponse
+from django.http import Http404
 from django.views.decorators.http import require_http_methods
-from django.shortcuts import render
+from django import shortcuts
 
 from shorten.models import Url
 
@@ -8,7 +10,7 @@ from shorten.models import Url
 @require_http_methods(["GET", "POST"])
 def index(request):
     if request.method == "GET":
-        return render(request, "shorten/index.html", {})
+        return shortcuts.render(request, "shorten/index.html", {})
     elif request.method == "POST":
         if request.is_ajax():
             url = request.body
@@ -17,13 +19,25 @@ def index(request):
         else:
             url = request.POST['url']
             shortened = Url.new(url.encode("utf-8"))
-            return render(request, "shorten/index.html",
+            return shortcuts.render(request, "shorten/index.html",
                           {"short": shortened.build_full_url(request),
                            "original": url})
 
 @require_http_methods(["GET"])
 def item(request):
-    return HttpResponse("item view")
+    try:
+        url = Url.objects.get(shortened_url=request.path[2:])
+    except ObjectDoesNotExist:
+        raise Http404
+
+    return shortcuts.render(request, "shorten/item.html",
+                  {"url": url,
+                   "full_shortened": url.build_full_url(request)})
 
 def redirect(request):
-    return HttpResponse("redirect")
+    try:
+        url = Url.objects.get(shortened_url=request.path[1:])
+    except ObjectDoesNotExist:
+        raise Http404
+
+    return shortcuts.redirect(url.original_url)

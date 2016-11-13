@@ -1,0 +1,18 @@
+{% include "shorten/header.html" %}
+
+<div class="container">
+  <div class="jumbotron">
+	  <div class="shortly-main">
+		<dl>
+		  <dt>Original URL</dt>
+		  <dd><a href="{{url.original_url}}">{{url.original_url}}</a></dd>
+		  <dt>Shortened URL</dt>
+		  <dd><a href="{{full_shortened}}">{{full_shortened}}</a></dd>
+		  <dt>User to blame</dt>
+		  <dd>{{url.user.username}}</dd>
+		</dl>
+	  </div>
+  </div>
+</div>
+
+{% include "shorten/footer.html" %}
