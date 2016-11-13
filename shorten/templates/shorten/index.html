@@ -4,12 +4,10 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="../../favicon.ico">
 
-    <title>Starter Template for Bootstrap</title>
+    <title>short.ly URL shortener</title>
 
     <!-- Bootstrap core CSS -->
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
@@ -34,13 +32,19 @@
     </nav>
 
     <div class="container">
-
-      <div class="starter-template">
-        <h1>short.ly - url shortener for random people!</h1>
-        <p class="lead">When you need to blame a random person for shortening
-			your url!</p>
-      </div>
-
-    </div><!-- /.container -->
+	  <div class="jumbotron">
+		  <div class="shortly-main">
+			<h1>short.ly - url shortener</h1>
+			<p class="lead">When you need to blame a random person for shortening
+				your url!</p>
+			<form class="form-inline">
+				<input type="text" class="form-control" id="url"
+				placeholder="Paste a link to shorten it" />
+				<button type="submit" class="form-control btn btn-default"
+					id="submit">Shorten</button>
+			</form>
+		  </div>
+	  </div>
+  </div>
   </body>
 </html>

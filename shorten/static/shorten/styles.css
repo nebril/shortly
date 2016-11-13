@@ -1,7 +1,19 @@
 body {
 	padding-top: 5rem;
 }
-.starter-template {
+.shortly-main{
 	padding: 3rem 1.5rem;
 	text-align: center;
+}
+
+@media (min-width: 768px) {
+	#url{
+		width: 80%;
+		float:left;
+	}
+
+	#submit{
+		width: 20%;
+		float:right;
+	}
 }
