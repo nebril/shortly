@@ -28,3 +28,4 @@ python app/manage.py runserver
  - remove not needed django apps (admin/auth/session etc.)
  - reduce size and layer count of docker image 
  - write unit tests
+ - make docker container use persistent data (right now it uses database created and populated inside container, which will perish in case of container failure)
