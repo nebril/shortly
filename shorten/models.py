@@ -1,8 +1,22 @@
+import hashlib
+from random import randint
+
+from django.core.exceptions import ObjectDoesNotExist
 from django.db import models
+from django.db.models.aggregates import Count
 
 from shortly import settings
 
+class UserManager(models.Manager):
+    def random(self):
+        count = self.aggregate(count=Count('id'))['count']
+        random_index = randint(0, count - 1)
+        return self.all()[random_index]
+
 class User(models.Model):
+    objects = UserManager()
+
+
     username = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
     last_name = models.CharField(max_length=100)
@@ -20,3 +34,16 @@ class Url(models.Model):
 
     def __str__(self):
         return "{} => {}".format(self.original_url, self.shortened_url)
+
+    @classmethod
+    def new(cls, url):
+        shortened = hashlib.md5(
+            url).hexdigest()[:settings.SHORT_URL_MAX_LEN]
+
+        try:
+            model = cls.objects.get(shortened_url=shortened)
+        except ObjectDoesNotExist:
+            user = User.objects.random()
+            model = cls(original_url=url, user=user, shortened_url=shortened)
+            model.save()
+        return model
