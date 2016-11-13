@@ -6,6 +6,7 @@ import requests
 
 from shorten.models import User
 
+
 class Command(BaseCommand):
     help = 'Adds randomly generated users'
 
@@ -33,7 +34,7 @@ class Command(BaseCommand):
         tz = timezone.get_current_timezone()
         for random_user in data["results"]:
             date = datetime.strptime(random_user["registered"],
-                                              "%Y-%m-%d %H:%M:%S")
+                                     "%Y-%m-%d %H:%M:%S")
             date = timezone.make_aware(date, tz)
             u = User(
                 username=random_user["login"]["username"],

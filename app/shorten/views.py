@@ -20,8 +20,10 @@ def index(request):
             url = request.POST['url']
             shortened = Url.new(url.encode("utf-8"))
             return shortcuts.render(request, "shorten/index.html",
-                          {"short": shortened.build_full_url(request),
-                           "original": url})
+                                    {"short": shortened.build_full_url(
+                                        request),
+                                     "original": url})
+
 
 @require_http_methods(["GET"])
 def item(request):
@@ -31,8 +33,9 @@ def item(request):
         raise Http404
 
     return shortcuts.render(request, "shorten/item.html",
-                  {"url": url,
-                   "full_shortened": url.build_full_url(request)})
+                            {"url": url,
+                             "full_shortened": url.build_full_url(request)})
+
 
 def redirect(request):
     try:

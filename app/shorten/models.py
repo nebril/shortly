@@ -7,15 +7,16 @@ from django.db.models.aggregates import Count
 
 from shortly import settings
 
+
 class UserManager(models.Manager):
     def random(self):
         count = self.aggregate(count=Count('id'))['count']
         random_index = randint(0, count - 1)
         return self.all()[random_index]
 
+
 class User(models.Model):
     objects = UserManager()
-
 
     username = models.CharField(max_length=100)
     first_name = models.CharField(max_length=100)
@@ -26,6 +27,7 @@ class User(models.Model):
 
     def __str__(self):
         return "{} {} {}".format(self.first, self.last_name, self.username)
+
 
 class Url(models.Model):
     original_url = models.CharField(max_length=2000)
