@@ -17,3 +17,13 @@ body {
 		float:right;
 	}
 }
+
+.result::before {
+	content: "Your shortened url is "
+}
+
+.result {
+	padding: 50px;
+	display: block;
+	font-size: 2em;
+}

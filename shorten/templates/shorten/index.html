@@ -37,12 +37,22 @@
 			<h1>short.ly - url shortener</h1>
 			<p class="lead">When you need to blame a random person for shortening
 				your url!</p>
-			<form class="form-inline">
-				<input type="text" class="form-control" id="url"
-				placeholder="Paste a link to shorten it" />
+			<form class="form-inline" action="" method="post">
+				{% if original %}
+					<input type="text" class="form-control" id="url" name="url"
+					placeholder="Paste a link to shorten it" value="{{original}}"/>
+				{% else %}
+					<input type="text" class="form-control" id="url" name="url"
+					placeholder="Paste a link to shorten it" />
+				{% endif %}
 				<button type="submit" class="form-control btn btn-default"
 					id="submit">Shorten</button>
 			</form>
+			<div class="result-container">
+			{% if short %}
+			<a target="_blank" class="result" href="{{short}}">{{short}}</a>
+			{% endif %}
+			</div>
 		  </div>
 	  </div>
   </div>
@@ -55,13 +65,14 @@
 	  $(document).ready(function(){
 		$("#submit").click(function(){
 
-			post_target = "/shorten"
+			post_target = window.location.href
 			$.post(post_target, $("#url").val())
 			  .done(function(data) {
-				  console.log(data);
+				  $(".result-container")
+				  .html('<a target="_blank" class="result" href="'+data+'">'+data+'</a>');
 			  })
 			  .fail(function(data) {
-				  console.log(data);
+				  console.log("error:", data);
 			  });
 
 			return false;

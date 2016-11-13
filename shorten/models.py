@@ -37,8 +37,7 @@ class Url(models.Model):
 
     @classmethod
     def new(cls, url):
-        shortened = hashlib.md5(
-            url).hexdigest()[:settings.SHORT_URL_MAX_LEN]
+        shortened = hashlib.md5(url).hexdigest()[:settings.SHORT_URL_MAX_LEN]
 
         try:
             model = cls.objects.get(shortened_url=shortened)
@@ -47,3 +46,7 @@ class Url(models.Model):
             model = cls(original_url=url, user=user, shortened_url=shortened)
             model.save()
         return model
+
+    def build_full_url(self, request):
+        return "http://{}/{}".format(request.META['HTTP_HOST'],
+                                     self.shortened_url)
